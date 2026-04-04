@@ -1,0 +1,1 @@
+.venv\Scripts\Activate.ps1; Remove-Item -Path build, dist, "*.spec" -Recurse -Force -ErrorAction SilentlyContinue; py build_exe.py

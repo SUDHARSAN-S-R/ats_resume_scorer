@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Resume Analyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ATS Resume Analyzer</h1>
+            <p class="subtitle">Check how well your resume matches the job description</p>
+        </header>
+
+        <main>
+            {% if score is defined %}
+            <div class="result-section">
+                <h2>Match Score</h2>
+                <div class="score-card">
+                    <div class="score-circle {% if score >= 75 %}high{% elif score >= 50 %}medium{% else %}low{% endif %}">
+                        <span class="score-value">{{ score }}%</span>
+                    </div>
+                    <p class="score-description">
+                        {% if score >= 75 %}
+                            <strong>Excellent match!</strong> Your resume aligns well with the job description.
+                        {% elif score >= 50 %}
+                            <strong>Good match.</strong> Consider optimizing your resume for better results.
+                        {% else %}
+                            <strong>Needs improvement.</strong> Try to include more relevant keywords from the job description.
+                        {% endif %}
+                    </p>
+                </div>
+                <a href="/" class="btn btn-secondary">Analyze Another Resume</a>
+            </div>
+            {% else %}
+            <div class="upload-section">
+                <form action="/" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="resume">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            Upload Resume (PDF)
+                        </label>
+                        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+                        <span class="file-name" id="fileName">No file chosen</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="job_description">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            Job Description
+                        </label>
+                        <textarea id="job_description" name="job_description" rows="12" placeholder="Paste the complete job description here..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polyline points="9 11 12 14 22 4"></polyline>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        Analyze Resume
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+        </main>
+
+        <footer>
+            <p>Developed by Sudharsan S R</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('resume').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No file chosen';
+            document.getElementById('fileName').textContent = fileName;
+        });
+    </script>
+</body>
+</html>
