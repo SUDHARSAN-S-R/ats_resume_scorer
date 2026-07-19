@@ -58,12 +58,15 @@ def index():
     return render_template('page.html')
 
 
+# if __name__ == '__main__':
+#     port = 5559
+#     url = f'http://127.0.0.1:{port}'
+    
+#     # Open browser after a short delay to ensure server is running
+#     threading.Timer(0.1, lambda: webbrowser.open(url)).start()
+    
+#     # Run Flask app without debug mode for exe
+#     app.run(port=port, debug=False)
 if __name__ == '__main__':
-    port = 5559
-    url = f'http://127.0.0.1:{port}'
-    
-    # Open browser after a short delay to ensure server is running
-    threading.Timer(0.1, lambda: webbrowser.open(url)).start()
-    
-    # Run Flask app without debug mode for exe
-    app.run(port=port, debug=False)
+    port = int(os.environ.get("PORT", 5559))
+    app.run(host='0.0.0.0', port=port, debug=False)
